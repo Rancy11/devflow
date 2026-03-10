@@ -99,7 +99,7 @@ exports.inviteMember = async (req, res) => {
   }
 };
 
-exports.getMyInvites = async (req, res) => {
+exports.getMyInvites = async (req, res) => { //getting invites
   try {
     const projects = await Project.find({ "pendingInvites.user": req.user._id })
       .populate("owner", "name email")
