@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-primary: #09090f;
+  --bg-secondary: #0d0e16;
+  --bg-card: #111320;
+  --bg-card-hover: #161928;
+  --bg-elevated: #1a1d2e;
+  --bg-input: #0d0e16;
+
+  --border: #1c1f33;
+  --border-light: #252942;
+  --border-focus: #4f6ef7;
+
+  --text-primary: #eaedf8;
+  --text-secondary: #8b90b8;
+  --text-muted: #45496a;
+
+  --accent: #4f6ef7;
+  --accent-glow: rgba(79,110,247,0.22);
+  --accent-dim: rgba(79,110,247,0.1);
+  --accent-hover: #3d5de0;
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+  --emerald: #10b981;
+  --amber: #f59e0b;
+  --rose: #f43f5e;
+
+  --status-todo-color: #4f6ef7;
+  --status-todo-bg: rgba(79,110,247,0.1);
+  --status-progress-color: #f59e0b;
+  --status-progress-bg: rgba(245,158,11,0.1);
+  --status-done-color: #10b981;
+  --status-done-bg: rgba(16,185,129,0.1);
+
+  --sidebar-w: 240px;
+  --topbar-h: 60px;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 18px;
+  --r-full: 9999px;
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.55);
+  --shadow-lg: 0 8px 36px rgba(0,0,0,0.65);
+
+  --t-fast: 0.14s ease;
+  --t-base: 0.24s ease;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; font-family: var(--font-body); }
+input, textarea, select { font-family: var(--font-body); outline: none; }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: var(--r-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeBackdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
