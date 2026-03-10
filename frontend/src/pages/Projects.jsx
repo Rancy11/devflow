@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
-import { Btn, Modal, Field, Input, Textarea, ProgressBar, Spinner } from "../components/UI";
+import { Btn, Modal, Field, Input, ProgressBar, Spinner } from "../components/UI";
 import "../components/styles.css";
 
 function CreateModal({ open, onClose, onCreated }) {
-  const [name, setName]   = useState("");
-  const [err, setErr]     = useState("");
+  const [name, setName]       = useState("");
+  const [err, setErr]         = useState("");
   const [loading, setLoading] = useState(false);
 
   const submit = async () => {
@@ -23,7 +23,12 @@ function CreateModal({ open, onClose, onCreated }) {
   return (
     <Modal open={open} onClose={onClose} title="New Project">
       <Field label="Project Name" error={err}>
-        <Input placeholder="e.g. My Awesome App" value={name} onChange={e => { setName(e.target.value); setErr(""); }} />
+        <Input
+          placeholder="e.g. My Awesome App"
+          value={name}
+          onChange={e => { setName(e.target.value); setErr(""); }}
+          onKeyDown={e => e.key === "Enter" && submit()}
+        />
       </Field>
       <div className="df-form-actions">
         <Btn variant="secondary" onClick={onClose}>Cancel</Btn>
@@ -60,12 +65,18 @@ export default function Projects() {
     load();
   }, []);
 
+  // FIX: actually deletes from the backend
   const handleDelete = async (id) => {
     setDeleting(id);
-    // Note: backend doesn't have DELETE /projects/:id yet — you can add it.
-    // For now we just remove from local state.
-    setProjects(p => p.filter(x => x._id !== id));
-    setDeleting(null);
+    try {
+      await api.delete(`/projects/${id}`);
+      setProjects(p => p.filter(x => x._id !== id));
+      setTasks(t => t.filter(x => x.project !== id));
+    } catch (e) {
+      alert(e.response?.data?.message || "Failed to delete project");
+    } finally {
+      setDeleting(null);
+    }
   };
 
   const getProgress = (proj) => {
@@ -97,7 +108,7 @@ export default function Projects() {
       ) : (
         <div className="df-projects-grid">
           {projects.map(p => {
-            const pct = getProgress(p);
+            const pct       = getProgress(p);
             const taskCount = tasks.filter(t => t.project === p._id).length;
             const doneCount = tasks.filter(t => t.project === p._id && t.status === "DONE").length;
             return (
@@ -106,8 +117,8 @@ export default function Projects() {
                   <div className="df-project-card__name">{p.name}</div>
                 </div>
                 <div className="df-project-card__progress">
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                    <span style={{ fontSize:11, color:"var(--text-muted)", fontFamily:"var(--font-mono)" }}>{doneCount}/{taskCount} tasks</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: 11, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{doneCount}/{taskCount} tasks</span>
                     <span className="df-project-card__pct">{pct}%</span>
                   </div>
                   <ProgressBar value={pct} />
