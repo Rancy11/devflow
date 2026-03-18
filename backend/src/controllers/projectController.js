@@ -1,5 +1,5 @@
 const Project = require("../models/Project");
-const User = require("../models/user");
+const User = require("../models/User");
 const { Resend } = require("resend");
 
 
