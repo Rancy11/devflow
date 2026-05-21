@@ -2,7 +2,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-RUN chmod +x node_modules/@esbuild/linux-x64/bin/esbuild
+RUN find node_modules/.bin -type f | xargs chmod +x
+RUN find node_modules/@esbuild -type f | xargs chmod +x
 COPY . .
 RUN npm run build
 
