@@ -1,8 +1,7 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
-RUN chmod -R +x node_modules/.bin node_modules/@esbuild
+RUN npm install --unsafe-perm
 COPY . .
 RUN npm run build
 
