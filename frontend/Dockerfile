@@ -1,8 +1,8 @@
 FROM node:20-alpine AS builder
+USER root
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-RUN chmod -R 777 node_modules
 COPY . .
 RUN npm run build
 
