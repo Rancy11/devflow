@@ -2,9 +2,9 @@ FROM node:20-alpine AS builder
 USER root
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
-RUN npm run build
+RUN npx --yes vite build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
